@@ -2,6 +2,7 @@
 
 import AboutMe from '@/components/home/aboutMe/AboutMe';
 import Banner from '@/components/home/banner/Banner';
+import Feature from '@/components/home/feature/Feature';
 
 import Skills from '@/components/home/skills/Skills';
 
@@ -17,6 +18,8 @@ const HomePage = () => {
       <Banner></Banner>
       <AboutMe></AboutMe>
       <Skills></Skills>
+      <Feature></Feature>
+
 
     </div>
   );

@@ -44,7 +44,6 @@ const AllBlogs = () => {
         router.push(`/dashboard/all_blogs/${id}`);
     };
     const handleDeleteBlog = async(id: string) => {
-     
         try {
             const res = await deleteBlog(id);
             if (res.success) {

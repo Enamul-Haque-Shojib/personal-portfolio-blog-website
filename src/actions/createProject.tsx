@@ -9,6 +9,8 @@ export type TProject = {
           description: string;
           technologies: string[];
           email: string,
+          github: string,
+          live: string,
    
 }
 const createProject = async(data:Partial<TProject>) => {

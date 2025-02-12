@@ -21,6 +21,7 @@ const Skills = async() => {
 
     return (
     <div>
+        <h1>Skills</h1>
     <Marquee autoFill={true}>
     {skillsData?.data.map((imgMarq : {_id: string, skillImgUrl: string}) => (
         

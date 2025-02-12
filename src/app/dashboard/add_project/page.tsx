@@ -25,6 +25,8 @@ const AddProject = () => {
           description: "",
           technologies: [],
           email: "",
+          github:"",
+          live:""
         },
     });
 
@@ -53,6 +55,8 @@ const AddProject = () => {
             description: data.description,
             technologies: technologies, // ✅ Use selected technologies array
             email: 'jack@gmail.com',
+            github: data.github,
+            live: data.live
         };
 
         console.log(initialData);
@@ -164,8 +168,38 @@ const AddProject = () => {
                                                             </FormItem>
                                                             )}
                                                         />
+                           
+                            <FormField
+                                control={form.control}
+                                name="github"
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Github Link</FormLabel>
+                                    <FormControl>
+                                    <Input placeholder="Github Link" required {...field}  />
+                                    </FormControl>
+                                    {/* <FormDescription>Full name of the sender.</FormDescription> */}
+                                    <FormMessage />
+                                </FormItem>
+                                )}
+                            />
+                           
+                            <FormField
+                                control={form.control}
+                                name="live"
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Live Link</FormLabel>
+                                    <FormControl>
+                                    <Input placeholder="Live Link" required {...field}  />
+                                    </FormControl>
+                                    {/* <FormDescription>Full name of the sender.</FormDescription> */}
+                                    <FormMessage />
+                                </FormItem>
+                                )}
+                            />
 
-                            {/* Submit Button */}
+
                             <div className="col-span-full text-center">
                                 <Button
                                 type="submit"
