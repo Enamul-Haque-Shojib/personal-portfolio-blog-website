@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/table";
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import deleteProject from '@/actions/deleteProject';
+
 
 const AllProjects = () => {
     const router = useRouter();
@@ -20,6 +22,7 @@ const AllProjects = () => {
     const [loading, setLoading] = useState<boolean>(true); // Loading state
     const [error, setError] = useState<string | null>(null); // Error handling
 
+    console.log(process.env.BACKEND_URL)
     useEffect(() => {
         const fetchProjects = async () => {
             try {
@@ -37,9 +40,13 @@ const AllProjects = () => {
         fetchProjects();
     }, []);
 
-    const handleUpdate = (id: string) => {
+    const handleUpdateProject = (id: string) => {
         router.push(`/dashboard/all_projects/${id}`);
     };
+    const handleDeleteProject = async(id: string) => {
+        const res = await deleteProject(id);
+        console.log(res)
+    }
 
     if (loading) return <p className="text-center text-gray-500">Loading projects...</p>;
     if (error) return <p className="text-center text-red-500">Error: {error}</p>;
@@ -69,8 +76,10 @@ const AllProjects = () => {
                                 ))}
                             </TableCell>
                             <TableCell className="text-right space-x-2">
-                                <Button onClick={() => handleUpdate(project._id)}>Update</Button>
-                                <Button variant="destructive">Delete</Button>
+                                <Button onClick={() => handleUpdateProject(project._id)}>Update</Button>
+                                <Button variant="destructive" 
+                                onClick={()=>{handleDeleteProject(project._id)}}
+                                >Delete</Button>
                             </TableCell>
                         </TableRow>
                     ))}

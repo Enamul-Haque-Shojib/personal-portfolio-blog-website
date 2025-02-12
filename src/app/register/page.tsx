@@ -18,8 +18,8 @@ const Register = () => {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const form = useForm({
         defaultValues: {
-          authName: "",
-          authImgUrl: null,
+          name: "",
+          image: null,
           email: "",
           password: "",
         },
@@ -30,12 +30,12 @@ const Register = () => {
 
       const onSubmit: SubmitHandler<FieldValues> = async (data) => {
      
-        const imageFile = data.authImgUrl[0];
+        const imageFile = data.image[0];
         const authImgUrl = await createImage(imageFile);
 
         const initialData: TAuth = {
-          authName: data.authName,
-          authImgUrl: authImgUrl,
+          name: data.name,
+          image: authImgUrl,
           email: data.email,
           password: data.password,
          
@@ -44,10 +44,11 @@ const Register = () => {
  
       
         try {
-          const response = await registerUser(initialData, data.email)
+          const response = await registerUser(initialData)
            
           
           console.log(response);
+
         } catch (error) {
           console.error("Error submitting form:", error);
      
@@ -70,7 +71,7 @@ const Register = () => {
                             >
                             <FormField
                                 control={form.control}
-                                name="authName"
+                                name="name"
                                 render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
@@ -84,7 +85,7 @@ const Register = () => {
                             />
                             <FormField
     control={form.control}
-    name="authImgUrl"
+    name="image"
     render={({ field }) => (
         <FormItem>
             <FormLabel>Image</FormLabel>

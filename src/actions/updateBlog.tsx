@@ -8,7 +8,7 @@ import { TBlog } from "./createBlog";
 
 
 const updateBlog = async(data: Partial<TBlog>, id: string) => {
-    const res = await fetch(`http://localhost:5000/api/projects/update-project/${id}`,
+    const res = await fetch(`http://localhost:5000/api/blogs/update-blog/${id}`,
         {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json'},

@@ -1,19 +1,17 @@
 
 "use server"
 
-
-
 export type TAuth = {
     _id?: string;
-    name?: string;
-    image?: string;
+    authName?: string;
+    authImgUrl?: string;
     email?: string;
     password?: string;
     role?: string;
    
 }
-const registerUser = async(data:TAuth) => {
-    const res = await fetch(`${process.env.BACKEND_URL}/auths/register`,
+const loginUser = async(data:TAuth) => {
+    const res = await fetch(`${process.env.BACKEND_URL}/auths/login`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
@@ -25,4 +23,4 @@ const registerUser = async(data:TAuth) => {
     return userData;
 };
 
-export default registerUser;
+export default loginUser;

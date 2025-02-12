@@ -11,8 +11,9 @@ import React, { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import createImage from "@/actions/createImage";
 import { useParams } from "next/navigation";
-import updateProject from "@/actions/updateProject";
+
 import { TBlog } from "@/actions/createBlog";
+import updateBlog from "@/actions/updateBlog";
 
 const UpdateBlog = () => {
     const { update_blog } = useParams(); 
@@ -80,7 +81,7 @@ const UpdateBlog = () => {
         console.log(updatedBlog);
 
         try {
-            const response = await updateProject(updatedBlog, update_blog);
+            const response = await updateBlog(updatedBlog, update_blog);
             console.log(response);
         } catch (error) {
             console.error("Error submitting form:", error);

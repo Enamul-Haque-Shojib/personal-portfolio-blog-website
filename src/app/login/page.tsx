@@ -3,8 +3,10 @@
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+// import loginUser from '@/utils/actions/loginUser';
 
-import registerUser, { TAuth } from '@/utils/actions/registerUser';
+// import { TAuth } from '@/utils/actions/registerUser';
+import { signIn } from 'next-auth/react';
 
 import { useRouter } from 'next/navigation';
 
@@ -22,25 +24,52 @@ const Login = () => {
 
       const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 
-        const initialData: TAuth = {
+
+
+
+        const result = await signIn("credentials", {
+          redirect: false, // Prevent default redirect
           email: data.email,
           password: data.password,
+        });
+    
+        if (result?.error) {
+          console.error("Login failed:", result.error);
+        } else {
+          router.push("/dashboard"); // Redirect after successful login
+        }
+
+
+
+
+
+
+
+
+
+      //   const initialData: TAuth = {
+      //     email: data.email,
+      //     password: data.password,
          
-      };
+      // };
      
  
       
-        try {
-          const response = await registerUser(initialData, data.email)
+      //   try {
+      //     const response = await loginUser(initialData)
            
           
-          console.log(response);
-        } catch (error) {
-          console.error("Error submitting form:", error);
+          
+      //     if(response.success==true) {
+      //       console.log(response);
+      //       router.push('/dashboard')
+      //     }
+      //   } catch (error) {
+      //     console.error("Error submitting form:", error);
      
-        }
-        form.reset();
-        router.push('/dashboard')
+      //   }
+      //   form.reset();
+      //   router.push('/dashboard')
       };
     return (
         <div>

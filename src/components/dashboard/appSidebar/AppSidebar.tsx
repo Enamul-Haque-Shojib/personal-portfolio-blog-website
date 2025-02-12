@@ -37,7 +37,7 @@ const role = 'User'
       { title: "All Projects", url: "all_projects", icon: Package },
       { title: "Add Blog", url: "add_blog", icon: Package },
       { title: "All Blogs", url: "all_blogs", icon: Package },
-      { title: "All Messages", url: "all_messages", icon: Package },
+      { title: "All Contact", url: "all_contactinfo", icon: Package },
     ],
   };
 
