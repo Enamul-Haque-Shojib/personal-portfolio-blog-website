@@ -3,8 +3,8 @@
 
 
 
-const deleteBlog = async(id: string) => {
-    const res = await fetch(`${process.env.BACKEND_URL}/blogs/delete-blog/${id}`,
+const deleteSkill = async(id: string) => {
+    const res = await fetch(`${process.env.BACKEND_URL}/skills/delete-skill/${id}`,
         {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json'},
@@ -15,4 +15,4 @@ const deleteBlog = async(id: string) => {
     return blogData;
 };
 
-export default deleteBlog;
+export default deleteSkill;

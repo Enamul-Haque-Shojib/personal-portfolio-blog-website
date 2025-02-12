@@ -14,23 +14,23 @@ import {
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
-import deleteBlog from '@/actions/deleteBlog';
-import deleteContact from '@/actions/deleteContact';
+
+import deleteSkill from '@/actions/deleteSkill';
 
 
-const AllContactInfo = () => {
+const ALLSkills = () => {
     const router = useRouter();
-    const [contactInfosData, setContactInfosData] = useState<any[]>([]); // Store fetched data
+    const [skillsData, setSkillsData] = useState<any[]>([]); // Store fetched data
     const [loading, setLoading] = useState<boolean>(true); // Loading state
     const [error, setError] = useState<string | null>(null); // Error handling
 
     useEffect(() => {
-        const fetchMessages = async () => {
+        const fetchSkills = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/contactinfo`);
-                if (!res.ok) throw new Error("Failed to fetch contact info");
+                const res = await fetch(`http://localhost:5000/api/skills`);
+                if (!res.ok) throw new Error("Failed to fetch blogs");
                 const data = await res.json();
-                setContactInfosData(data.data);
+                setSkillsData(data.data);
             } catch (err: any) {
                 setError(err.message);
             } finally {
@@ -38,17 +38,18 @@ const AllContactInfo = () => {
             }
         };
 
-        fetchMessages();
+        fetchSkills();
     }, []);
 
-  
-    const handleDeleteContact = async(id: string) => {
-     
+    const handleUpdateSkill = (id: string) => {
+        router.push(`/dashboard/all_skills/${id}`);
+    };
+    const handleDeleteSkill = async(id: string) => {
         try {
-            const res = await deleteContact(id);
+            const res = await deleteSkill(id);
             if (res.success) {
                 // Remove deleted project from UI
-                setContactInfosData((prev) => prev.filter((info) => info._id !== id));
+                setSkillsData((prev) => prev.filter((skill) => skill._id !== id));
             } else {
                 console.error("Error deleting project:", res.message);
             }
@@ -66,24 +67,22 @@ const AllContactInfo = () => {
                 <TableCaption>A list of your recent titles.</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[100px]">Name</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Message</TableHead>
+                        <TableHead className="w-[100px]">Title</TableHead>
+                       
                       
                         <TableHead className="text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {contactInfosData.map((info) => (
-                        <TableRow key={info._id}>
-                            <TableCell className="font-medium">{info.name}</TableCell>
-                            <TableCell>{info.email}</TableCell>
-                            <TableCell>{info.message}</TableCell>
+                    {skillsData.map((skill) => (
+                        <TableRow key={skill._id}>
+                            <TableCell className="font-medium">{skill.title}</TableCell>
+                      
                             
                             <TableCell className="text-right space-x-2">
-                               
+                                <Button onClick={() => handleUpdateSkill(skill._id)}>Update</Button>
                                 <Button variant="destructive" 
-                                onClick={()=>{handleDeleteContact(info._id)}}
+                                onClick={()=>{handleDeleteSkill(skill._id)}}
                                 >Delete</Button>
                             </TableCell>
                         </TableRow>
@@ -94,4 +93,4 @@ const AllContactInfo = () => {
     );
 };
 
-export default AllContactInfo;
+export default ALLSkills;

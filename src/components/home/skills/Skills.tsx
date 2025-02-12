@@ -6,17 +6,19 @@ import Marquee from 'react-fast-marquee';
 
 
 const Skills = async() => {
+
     const res = await fetch('http://localhost:5000/api/skills',
     {
         // cache: "force-cache",
         // next: {
         //     revalidate: 5
         // }
-        // cache: "no-store",
+        cache: "no-store",
     }
     );
     const skillsData = await res.json();
-  
+  console.log(skillsData)
+
     return (
     <div>
     <Marquee autoFill={true}>

@@ -22,7 +22,7 @@ const AllProjects = () => {
     const [loading, setLoading] = useState<boolean>(true); // Loading state
     const [error, setError] = useState<string | null>(null); // Error handling
 
-    console.log(process.env.BACKEND_URL)
+
     useEffect(() => {
         const fetchProjects = async () => {
             try {
@@ -44,8 +44,17 @@ const AllProjects = () => {
         router.push(`/dashboard/all_projects/${id}`);
     };
     const handleDeleteProject = async(id: string) => {
-        const res = await deleteProject(id);
-        console.log(res)
+        try {
+            const res = await deleteProject(id);
+            if (res.success) {
+                // Remove deleted project from UI
+                setProjectsData((prev) => prev.filter((project) => project._id !== id));
+            } else {
+                console.error("Error deleting project:", res.message);
+            }
+        } catch (error) {
+            console.error("Failed to delete project:", error);
+        }
     }
 
     if (loading) return <p className="text-center text-gray-500">Loading projects...</p>;
@@ -90,3 +99,9 @@ const AllProjects = () => {
 };
 
 export default AllProjects;
+
+
+
+
+
+

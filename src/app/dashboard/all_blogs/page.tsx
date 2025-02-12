@@ -44,8 +44,18 @@ const AllBlogs = () => {
         router.push(`/dashboard/all_blogs/${id}`);
     };
     const handleDeleteBlog = async(id: string) => {
-        const res = await deleteBlog(id);
-        console.log(res)
+     
+        try {
+            const res = await deleteBlog(id);
+            if (res.success) {
+           
+                setBlogsData((prev) => prev.filter((blog) => blog._id !== id));
+            } else {
+                console.error("Error deleting project:", res.message);
+            }
+        } catch (error) {
+            console.error("Failed to delete project:", error);
+        }
     }
 
     if (loading) return <p className="text-center text-gray-500">Loading blogs...</p>;

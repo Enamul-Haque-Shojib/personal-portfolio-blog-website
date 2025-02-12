@@ -3,7 +3,7 @@
 import React, { ReactNode, useState } from 'react';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from '@/components/dashboard/appSidebar/AppSidebar';
-import { SessionProvider } from 'next-auth/react';
+
 type Child = {
     children: ReactNode
 }

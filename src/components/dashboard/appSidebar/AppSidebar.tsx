@@ -18,13 +18,17 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { SidebarBoolean } from "@/app/dashboard/layout";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+
 
 
 // import useAuth from "@/hooks/useAuth";
 
 
 const AppSidebar = ({ sidebarOpen }: SidebarBoolean) => {
+const {data: session} = useSession();
+const {name,email, image} = session?.user;
+console.log(session)
 
   
 const role = 'User'
@@ -33,6 +37,8 @@ const role = 'User'
   const items = {
     User: [
       
+      { title: "Add Skill", url: "add_skill", icon: Package },
+      { title: "All Skills", url: "all_skills", icon: Package },
       { title: "Add Project", url: "add_project", icon: Package },
       { title: "All Projects", url: "all_projects", icon: Package },
       { title: "Add Blog", url: "add_blog", icon: Package },
@@ -54,7 +60,7 @@ const role = 'User'
       <SidebarHeader className="flex items-center justify-between py-4 px-4">
         <div className="flex items-center space-x-2">
           
-          {sidebarOpen && <h1 className="text-2xl font-bold">Parcel Warehouse</h1>}
+          {sidebarOpen && <h1 className="text-2xl font-bold text-black">Portfolio</h1>}
         </div>
         <Link href='/'><Home className="w-5 h-5 hover:opacity-75 text-black" /></Link>
       </SidebarHeader>
@@ -62,9 +68,7 @@ const role = 'User'
       {/* Content */}
       <SidebarContent>
         <SidebarGroup>
-          {/* <SidebarGroupLabel className="text-gray-400 uppercase tracking-wide px-4">
-            Application
-          </SidebarGroupLabel> */}
+       
           <SidebarGroupContent>
             <SidebarMenu>
               {items[role]?.map((item) => (
@@ -101,15 +105,15 @@ const role = 'User'
             {/* <User className="w-5 h-5 text-white" /> */}
            
             <Avatar className={!sidebarOpen ? 'w-5 h-5' : ''}>
-                <AvatarImage src='' className="w-full h-full" alt="@shadcn" />
+                <AvatarImage src={image} className="w-full h-full" alt="@shadcn" />
                   <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             
           </div>
           {sidebarOpen && (
             <div className="text-sm">
-              <p className="font-bold">Enamul</p>
-              <p className="text-gray-400 text-xs">enamul@gmail.com</p>
+              <p className="font-bold text-black">{name}</p>
+              <p className="text-gray-400 text-xs">{email}</p>
             </div>
           )}
         </div>
@@ -122,7 +126,7 @@ const role = 'User'
         {!sidebarOpen && (
           <LogOut 
           className="w-5 h-5 cursor-pointer text-black"
-          //  onClick={handleLogOut}
+            onClick={()=>{signOut()}}
            ></LogOut>
         )}
       </SidebarFooter>

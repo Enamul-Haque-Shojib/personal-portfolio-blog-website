@@ -10,10 +10,11 @@ import { X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import createImage from "@/actions/createImage";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import updateProject from "@/actions/updateProject";
 
 const UpdateProject = () => {
+    const router = useRouter();
     const { update_project } = useParams(); 
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [technologies, setTechnologies] = useState<string[]>([]);
@@ -96,6 +97,7 @@ const UpdateProject = () => {
         try {
             const response = await updateProject(updatedProject, update_project);
             console.log(response);
+            router.push('/dashboard/all_projects')
         } catch (error) {
             console.error("Error submitting form:", error);
         }

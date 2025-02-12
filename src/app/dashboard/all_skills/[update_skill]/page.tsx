@@ -12,21 +12,19 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import createImage from "@/actions/createImage";
 import { useParams, useRouter } from "next/navigation";
 
-import { TBlog } from "@/actions/createBlog";
-import updateBlog from "@/actions/updateBlog";
-
+import updateSkill from "@/actions/updateSkill";
+import { TSkill } from "@/actions/createSkill";
 
 const UpdateBlog = () => {
     const router = useRouter();
-    const { update_blog } = useParams(); 
+    const { update_skill } = useParams(); 
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     const form = useForm({
         defaultValues: {
             title: "",
-            blogImgUrl: null,
-            content: "",
+            skillImgUrl: null,
             email: "",
         },
     });
@@ -34,20 +32,19 @@ const UpdateBlog = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/blogs/get-single-blog/${update_blog}`);
+                const res = await fetch(`http://localhost:5000/api/skills/get-single-skill/${update_skill}`);
                 if (!res.ok) throw new Error("Failed to fetch blog");
                 const data = await res.json();
-                const blog = data.data[0];
+                const skill = data.data[0];
 
                 form.reset({
-                    title: blog.title,
-                    blogImgUrl: blog.blogImgUrl,
-                    content: blog.content,
-                    email: blog.email || "",
+                    title: skill.title,
+                    skillImgUrl: skill.skillImgUrl,
+                    email: skill.email || "",
                 });
 
                 
-                setImagePreview(blog.blogImgUrl);
+                setImagePreview(skill.skillImgUrl);
             } catch (error) {
                 console.error(error);
             } finally {
@@ -56,36 +53,34 @@ const UpdateBlog = () => {
         };
 
         fetchBlog();
-    }, [update_blog, form]);
+    }, [update_skill, form]);
 
 
     
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        let blogImgUrl : string | File |null;
-        blogImgUrl = imagePreview;
-        console.log(blogImgUrl)
+        let skillImgUrl : string | File |null;
+        skillImgUrl = imagePreview;
+        console.log(skillImgUrl)
 
-        if (typeof data.projectImgUrl === 'object') {
-            blogImgUrl = await createImage(data.blogImgUrl[0]);
+        if (typeof data.skillImgUrl === 'object') {
+            skillImgUrl = await createImage(data.skillImgUrl[0]);
         }
 
      
 
-        const updatedBlog: Partial<TBlog> = {
+        const updatedSkill: Partial<TSkill> = {
             title: data.title,
-            blogImgUrl: blogImgUrl,
-            content: data.content,
-          
+            skillImgUrl: skillImgUrl,
             email: data.email,
         };
 
-        console.log(updatedBlog);
+        console.log(updatedSkill);
 
         try {
-            const response = await updateBlog(updatedBlog, update_blog);
+            const response = await updateSkill(updatedSkill, update_skill);
             console.log(response);
-            router.push('/dashboard/all_blogs')
+            router.push('/dashboard/all_skills')
         } catch (error) {
             console.error("Error submitting form:", error);
         }
@@ -115,10 +110,10 @@ const UpdateBlog = () => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="blogImgUrl"
+                                    name="skillImgUrl"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Blog Image</FormLabel>
+                                            <FormLabel>skill Image</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="file"
@@ -144,19 +139,7 @@ const UpdateBlog = () => {
                                         </FormItem>
                                     )}
                                 />
-                                <FormField
-                                    control={form.control}
-                                    name="content"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Content</FormLabel>
-                                            <FormControl>
-                                                <Textarea placeholder="Content" required {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                                
                                
                                 <div className="col-span-full text-center">
                                     <Button type="submit" className="w-full bg-[#ff004f] text-white p-6 rounded-lg shadow-md hover:bg-red-700 transition">

@@ -7,6 +7,7 @@ const deleteProject = async(id: string) => {
         {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json'},
+            cache: 'no-store'
         }
     );
     const projectData = res.json();
