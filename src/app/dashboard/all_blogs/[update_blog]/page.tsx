@@ -85,8 +85,10 @@ const UpdateBlog = () => {
         try {
             const response = await updateBlog(updatedBlog, update_blog);
             console.log(response);
+            //add toast by 'shadch ui'
             router.push('/dashboard/all_blogs')
         } catch (error) {
+            //add toast by 'shadch ui'
             console.error("Error submitting form:", error);
         }
     };

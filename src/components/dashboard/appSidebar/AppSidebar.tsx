@@ -13,7 +13,7 @@ import {
   SidebarGroupContent,
 } from "@/components/ui/sidebar";
 
-import { ChartSpline, User, Package, BookDown, Truck, Star, LogOut, Home, Menu } from "lucide-react";
+import { ChartSpline, User, Package, BookDown, Truck, Star, LogOut, Home, Menu, CodeXml, Code, FolderOpenDot, FolderGit2, StickyNote, Rss, MessageSquareText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
@@ -37,13 +37,13 @@ const role = 'User'
   const items = {
     User: [
       
-      { title: "Add Skill", url: "add_skill", icon: Package },
-      { title: "All Skills", url: "all_skills", icon: Package },
-      { title: "Add Project", url: "add_project", icon: Package },
-      { title: "All Projects", url: "all_projects", icon: Package },
-      { title: "Add Blog", url: "add_blog", icon: Package },
-      { title: "All Blogs", url: "all_blogs", icon: Package },
-      { title: "All Contact", url: "all_contactinfo", icon: Package },
+      { title: "Add Skill", url: "add_skill", icon: Code },
+      { title: "All Skills", url: "all_skills", icon: CodeXml },
+      { title: "Add Project", url: "add_project", icon: FolderOpenDot },
+      { title: "All Projects", url: "all_projects", icon: FolderGit2 },
+      { title: "Add Blog", url: "add_blog", icon: StickyNote },
+      { title: "All Blogs", url: "all_blogs", icon: Rss },
+      { title: "All Contact", url: "all_contactinfo", icon: MessageSquareText },
     ],
   };
 
@@ -54,7 +54,7 @@ const role = 'User'
       collapsible="icon"
       className={`${
         sidebarOpen ? "w-[260px]" : "w-[80px]"
-      } bg-gradient-to-b from-gray-800 to-gray-900 text-white transition-all duration-300`}
+      } transition-all duration-300 bg-gradient-to-b from-gray-800 to-gray-900`}
     >
       {/* Header */}
       <SidebarHeader className="flex items-center justify-between py-4 px-4">

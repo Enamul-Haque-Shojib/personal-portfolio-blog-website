@@ -6,6 +6,7 @@ import Footer from "@/components/share/footer/Footer";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/authOptions";
 import AuthProvider from "@/components/providers/AuthProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +37,9 @@ const RootLayout=async({
       >
       <AuthProvider session={session}>
       {children}
+      
       </AuthProvider>
+      <Toaster />
         
       
       </body>

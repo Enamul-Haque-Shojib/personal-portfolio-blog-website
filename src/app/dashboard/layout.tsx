@@ -32,3 +32,4 @@ const DashboardLayout = ({children}:Child) => {
 };
 
 export default DashboardLayout;
+
