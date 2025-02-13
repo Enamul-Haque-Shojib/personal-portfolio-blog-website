@@ -14,11 +14,13 @@ import {
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
-import deleteBlog from '@/actions/deleteBlog';
 
+import deleteBlog from '@/actions/deleteBlog';
+import { useToast } from '@/hooks/use-toast';
 
 const AllBlogs = () => {
     const router = useRouter();
+    const { toast } = useToast();
     const [blogsData, setBlogsData] = useState<any[]>([]); // Store fetched data
     const [loading, setLoading] = useState<boolean>(true); // Loading state
     const [error, setError] = useState<string | null>(null); // Error handling
@@ -43,19 +45,20 @@ const AllBlogs = () => {
     const handleUpdateBlog = (id: string) => {
         router.push(`/dashboard/all_blogs/${id}`);
     };
-    const handleDeleteBlog = async(id: string) => {
+
+    const handleDeleteBlog = async (id: string) => {
         try {
             const res = await deleteBlog(id);
             if (res.success) {
-           
                 setBlogsData((prev) => prev.filter((blog) => blog._id !== id));
+                toast({ title: "Success", description: "Blog deleted successfully", variant: "default" });
             } else {
-                console.error("Error deleting project:", res.message);
+                toast({ title: "Error", description: res.message, variant: "destructive" });
             }
         } catch (error) {
-            console.error("Failed to delete project:", error);
+            toast({ title: "Error", description: "Failed to delete blog", variant: "destructive" });
         }
-    }
+    };
 
     if (loading) return <p className="text-center text-gray-500">Loading blogs...</p>;
     if (error) return <p className="text-center text-red-500">Error: {error}</p>;
@@ -63,12 +66,11 @@ const AllBlogs = () => {
     return (
         <div>
             <Table>
-                <TableCaption>A list of your recent titles.</TableCaption>
+                <TableCaption>A list of your recent blogs.</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[100px]">Title</TableHead>
                         <TableHead>Content</TableHead>
-                      
                         <TableHead className="text-right">Action</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -77,12 +79,11 @@ const AllBlogs = () => {
                         <TableRow key={blog._id}>
                             <TableCell className="font-medium">{blog.title}</TableCell>
                             <TableCell>{blog.content}</TableCell>
-                            
                             <TableCell className="text-right space-x-2">
                                 <Button onClick={() => handleUpdateBlog(blog._id)}>Update</Button>
-                                <Button variant="destructive" 
-                                onClick={()=>{handleDeleteBlog(blog._id)}}
-                                >Delete</Button>
+                                <Button variant="destructive" onClick={() => handleDeleteBlog(blog._id)}>
+                                    Delete
+                                </Button>
                             </TableCell>
                         </TableRow>
                     ))}

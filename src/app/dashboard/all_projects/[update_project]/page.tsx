@@ -12,8 +12,10 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import createImage from "@/actions/createImage";
 import { useParams, useRouter } from "next/navigation";
 import updateProject from "@/actions/updateProject";
+import { useToast } from "@/hooks/use-toast";
 
 const UpdateProject = () => {
+    const { toast } = useToast();
     const router = useRouter();
     const { update_project } = useParams(); 
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -27,6 +29,8 @@ const UpdateProject = () => {
             description: "",
             technologies: [],
             email: "",
+            github:"",
+            live:""
         },
     });
 
@@ -44,6 +48,8 @@ const UpdateProject = () => {
                     description: project.description,
                     technologies: project.technologies || [],
                     email: project.email || "",
+                    github: project.github || "",
+                    live: project.live || ""
                 });
 
                 setTechnologies(project.technologies || []);
@@ -90,6 +96,8 @@ const UpdateProject = () => {
             description: data.description,
             technologies: technologies,
             email: data.email,
+            github: data.github,
+            live: data.live
         };
 
         console.log(updatedProject);
@@ -98,8 +106,10 @@ const UpdateProject = () => {
             const response = await updateProject(updatedProject, update_project);
             console.log(response);
             router.push('/dashboard/all_projects')
+            toast({ title: "Success", description: "Project updated successfully!" });
         } catch (error) {
             console.error("Error submitting form:", error);
+            toast({ variant: "destructive", title: "Error", description: "Failed to update project." });
         }
     };
 
@@ -191,6 +201,25 @@ const UpdateProject = () => {
                                         </FormItem>
                                     )}
                                 />
+                                <FormField control={form.control} name="github" render={({ field }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>GitHub Link</FormLabel>
+                                                                    <FormControl>
+                                                                        <Input placeholder="Enter GitHub link" required {...field} />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )} />
+                                
+                                                            <FormField control={form.control} name="live" render={({ field }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>Live Link</FormLabel>
+                                                                    <FormControl>
+                                                                        <Input placeholder="Enter live site link" required {...field} />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )} />
                                 <div className="col-span-full text-center">
                                     <Button type="submit" className="w-full bg-[#ff004f] text-white p-6 rounded-lg shadow-md hover:bg-red-700 transition">
                                         Update

@@ -48,10 +48,10 @@ const AddBlog = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white p-4">
-            <Card className="w-full max-w-2xl bg-gray-800 shadow-lg rounded-lg">
+        <div className="flex items-center justify-center min-h-screen  text-black p-4">
+            <Card className="w-full max-w-2xl  rounded-lg">
                 <CardHeader>
-                    <CardTitle className="text-center text-xl font-bold text-white">Add New Blog</CardTitle>
+                    <CardTitle className="text-center text-xl font-bold text-black">Add New Blog</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
@@ -61,9 +61,9 @@ const AddBlog = () => {
                                 name="title"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className='text-white'>Title</FormLabel>
+                                        <FormLabel className='text-black'>Title</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Enter blog title" required {...field} className="bg-gray-700 text-white border-none" />
+                                            <Input placeholder="Enter blog title" required {...field} className=" text-black border-none" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -74,7 +74,7 @@ const AddBlog = () => {
                                 name="blogImgUrl"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className='text-white'>Blog Image</FormLabel>
+                                        <FormLabel className='text-black'>Blog Image</FormLabel>
                                         <FormControl>
                                             <Input
                                                 type="file"
@@ -87,7 +87,7 @@ const AddBlog = () => {
                                                         setImagePreview(imageUrl);
                                                     }
                                                 }}
-                                                className="bg-gray-700 text-white border-none"
+                                                className=" text-black border-none"
                                             />
                                         </FormControl>
                                         {imagePreview && (
@@ -107,13 +107,13 @@ const AddBlog = () => {
                                 name="content"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className='text-white'>Content</FormLabel>
+                                        <FormLabel className='text-black'>Content</FormLabel>
                                         <FormControl>
                                             <Textarea
                                                 placeholder="Write your blog content here..."
                                                 required
                                                 {...field}
-                                                className="bg-gray-700 text-white border-none h-32"
+                                                className=" text-black border-none h-32"
                                             />
                                         </FormControl>
                                         <FormMessage />

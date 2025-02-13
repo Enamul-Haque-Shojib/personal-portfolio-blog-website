@@ -14,8 +14,10 @@ import { useParams, useRouter } from "next/navigation";
 
 import updateSkill from "@/actions/updateSkill";
 import { TSkill } from "@/actions/createSkill";
+import { useToast } from "@/hooks/use-toast";
 
-const UpdateBlog = () => {
+const UpdateSkill = () => {
+    const { toast } = useToast();
     const router = useRouter();
     const { update_skill } = useParams(); 
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -81,20 +83,22 @@ const UpdateBlog = () => {
             const response = await updateSkill(updatedSkill, update_skill);
             console.log(response);
             router.push('/dashboard/all_skills')
+            toast({ title: "Success", description: "skill updated successfully", variant: "default" });
         } catch (error) {
             console.error("Error submitting form:", error);
+            toast({ variant: "destructive", title: "Error", description: "Failed to update skill." });
         }
     };
 
     if (loading) return <p className="text-center text-gray-500">Loading blog details...</p>;
 
     return (
-        <div className="bg-gray-900 text-white py-16">
+        <div className=" text-black py-16">
             <div className="w-[90%] max-w-5xl mx-auto">
                 <div className="flex flex-col md:flex-row gap-10">
                     <div className="w-full md:w-1/2">
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-gray-800 p-6 rounded-lg shadow-lg space-y-4">
+                            <form onSubmit={form.handleSubmit(onSubmit)} className=" p-6 rounded-lg shadow-lg space-y-4">
                                 <FormField
                                     control={form.control}
                                     name="title"
@@ -155,4 +159,4 @@ const UpdateBlog = () => {
     );
 };
 
-export default UpdateBlog;
+export default UpdateSkill;
