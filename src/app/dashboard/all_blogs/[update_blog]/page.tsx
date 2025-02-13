@@ -90,8 +90,8 @@ const UpdateBlog = () => {
     if (loading) return <p className="text-center text-gray-500">Loading blog details...</p>;
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white p-4">
-            <div className="w-full max-w-2xl bg-gray-800 shadow-lg rounded-lg p-6">
+        <div className="flex items-center justify-center min-h-screen text-black p-4">
+            <div className="w-full max-w-2xl shadow-lg rounded-lg p-6">
                 <h2 className="text-center text-xl font-bold mb-4">Update Blog</h2>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -102,7 +102,7 @@ const UpdateBlog = () => {
                                 <FormItem>
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Title" required {...field} className="bg-gray-700 text-white border-none" />
+                                        <Input placeholder="Title" required {...field} className=" text-black border-none" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -125,7 +125,7 @@ const UpdateBlog = () => {
                                                     setImagePreview(URL.createObjectURL(file));
                                                 }
                                             }}
-                                            className="bg-gray-700 text-white border-none"
+                                            className="text-black border-none"
                                         />
                                     </FormControl>
                                     {imagePreview && (
@@ -147,7 +147,7 @@ const UpdateBlog = () => {
                                 <FormItem>
                                     <FormLabel>Content</FormLabel>
                                     <FormControl>
-                                        <Textarea placeholder="Content" required {...field} className="bg-gray-700 text-white border-none h-32" />
+                                        <Textarea placeholder="Content" required {...field} className=" text-black border-none h-32" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

@@ -116,12 +116,12 @@ const UpdateProject = () => {
     if (loading) return <p className="text-center text-gray-500">Loading project details...</p>;
 
     return (
-        <div className="bg-gray-900 text-white py-16">
+        <div className=" text-black py-16">
             <div className="w-[90%] max-w-5xl mx-auto">
                 <div className="flex flex-col md:flex-row gap-10">
                     <div className="w-full md:w-1/2">
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className="bg-gray-800 p-6 rounded-lg shadow-lg space-y-4">
+                            <form onSubmit={form.handleSubmit(onSubmit)} className=" p-6 rounded-lg shadow-lg space-y-4">
                                 <FormField
                                     control={form.control}
                                     name="projectName"
@@ -190,7 +190,7 @@ const UpdateProject = () => {
                                             </FormControl>
                                             <div className="flex flex-wrap gap-2 mt-2">
                                                 {technologies.map((tech) => (
-                                                    <span key={tech} className="bg-gray-700 text-white px-3 py-1 rounded-lg flex items-center gap-2">
+                                                    <span key={tech} className=" text-black px-3 py-1 rounded-lg flex items-center gap-2">
                                                         {tech}
                                                         <button type="button" onClick={() => handleRemoveTechnology(tech)}>
                                                             <X size={16} className="text-red-500" />
