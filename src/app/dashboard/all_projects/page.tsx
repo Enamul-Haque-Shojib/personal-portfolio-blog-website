@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 // "use client"
 
@@ -135,7 +136,7 @@ const AllProjects = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/projects");
+        const res = await fetch("https://personal-portfolio-blog-website-server.vercel.app/api/projects");
         if (!res.ok) throw new Error("Failed to fetch projects");
         const data = await res.json();
         setProjectsData(data.data);

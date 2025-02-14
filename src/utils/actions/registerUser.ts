@@ -13,7 +13,7 @@ export type TAuth = {
    
 }
 const registerUser = async(data:TAuth) => {
-    const res = await fetch(`${process.env.BACKEND_URL}/auths/register`,
+    const res = await fetch(`https://personal-portfolio-blog-website-server.vercel.app/api/auths/register`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},

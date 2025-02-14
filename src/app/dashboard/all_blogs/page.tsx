@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 // "use client"
 
@@ -127,7 +128,7 @@ const AllBlogs = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/blogs`);
+        const res = await fetch(`https://personal-portfolio-blog-website-server.vercel.app/api/blogs`);
         if (!res.ok) throw new Error("Failed to fetch blogs");
         const data = await res.json();
         setBlogsData(data.data);

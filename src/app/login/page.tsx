@@ -4,12 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
 const Login = () => {
+  const { toast } = useToast();
   const router = useRouter();
   
   const form = useForm({
@@ -20,15 +22,19 @@ const Login = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+   
     const result = await signIn('credentials', {
       redirect: false,
       email: data.email,
       password: data.password,
     });
 
+ 
     if (result?.error) {
       console.error('Login failed:', result.error);
+      toast({ title: "Error", description: "Failed to Logged in." });
     } else {
+      toast({ title: "Success", description: "Logged in successfully!" });
       router.push('/dashboard');
     }
   };

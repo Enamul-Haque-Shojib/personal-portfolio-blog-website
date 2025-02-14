@@ -23,23 +23,24 @@ export const authOptions : NextAuthOptions = {
     },
     async authorize(credentials) {
     
-      const res = await fetch(`${process.env.BACKEND_URL}/auths/login`, {
+      const res = await fetch(`https://personal-portfolio-blog-website-server.vercel.app/api/auths/login`, {
         method: 'POST',
         body: JSON.stringify(credentials),
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
+        cache: 'no-store'
       })
       const user = await res.json()
-
-      // If no error and we have user data, return it
+console.log(user)
+      
       if (res.ok && user) {
         return {
           id: user.data.auth._id,
-          name: user.data.auth.name,     // Ensure API returns `name`
-          email: user.data.auth.email,   // Ensure API returns `email`
-          image: user.data.auth.image,   // Ensure API returns `image`
+          name: user.data.auth.name,     
+          email: user.data.auth.email,   
+          image: user.data.auth.image,   
         };
       }
-      // Return null if user data could not be retrieved
+      
       return null
     }
   })

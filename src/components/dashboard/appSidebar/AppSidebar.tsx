@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Sidebar,
   SidebarHeader,
@@ -13,7 +13,7 @@ import {
   SidebarGroupContent,
 } from "@/components/ui/sidebar";
 
-import { ChartSpline, User, Package, BookDown, Truck, Star, LogOut, Home, Menu, CodeXml, Code, FolderOpenDot, FolderGit2, StickyNote, Rss, MessageSquareText } from "lucide-react";
+import { LogOut, Home, CodeXml, Code, FolderOpenDot, FolderGit2, StickyNote, Rss, MessageSquareText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
@@ -22,13 +22,15 @@ import { signOut, useSession } from "next-auth/react";
 
 
 
-// import useAuth from "@/hooks/useAuth";
-
 
 const AppSidebar = ({ sidebarOpen }: SidebarBoolean) => {
 const {data: session} = useSession();
-const {name,email, image} = session?.user;
-console.log(session)
+// const {name,email, image} = session?.user;
+
+const name = session?.user?.name || '';
+const email = session?.user?.email || '';
+const image = session?.user?.image || '';
+
 
   
 const role = 'User'

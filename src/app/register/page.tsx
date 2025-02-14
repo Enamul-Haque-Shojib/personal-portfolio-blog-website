@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
 import registerUser from '@/utils/actions/registerUser';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
@@ -14,6 +15,7 @@ import React, { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
 const Register = () => {
+  const { toast } = useToast();
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -40,8 +42,10 @@ const Register = () => {
       await registerUser(initialData);
       form.reset();
       router.push('/login');
+      toast({ title: "Success", description: "Sign Up successfully!" });
     } catch (error) {
       console.error('Error submitting form:', error);
+      toast({ title: "Error", description: "Failed to Register." });
     }
   };
 

@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { useSession } from 'next-auth/react';
 
 
 import Image from 'next/image';
@@ -14,6 +15,8 @@ import React, { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
 const AddSkill = () => {
+    const {data: session} = useSession();
+        const email = session?.user?.email || "";
     const { toast } = useToast();
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const form = useForm({
@@ -30,7 +33,7 @@ const AddSkill = () => {
             const initialData: TSkill = {
                 title: data.title,
                 skillImgUrl: skillImgUrl,
-                email: 'jack@gmail.com',
+                email: email,
             };
             await createSkill(initialData);
             toast({ title: "Success", description: "Skill added successfully!" });

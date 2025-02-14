@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import React from 'react';
-import profile from '../../../assets/EnamulHaque.png'
+import profile from '../../../assets/profile.png'
 
 const Banner = () => {
     return (
         <div>
-            <div className="bg-gray-900 py-20" id="header">
+            <div className="py-20" id="header">
         <div className="flex flex-col md:flex-row justify-evenly items-center w-[90%] mx-auto">
             
             <div className="text-center md:text-left space-y-5">
-                <h1 className="text-4xl md:text-6xl font-bold text-white">
+                <h1 className="text-4xl md:text-6xl font-bold text-black">
                     Hi, I`m <span className="text-[#ff004f]">Enamul Haque</span>
                     <br/> From Bangladesh
                 </h1>
@@ -32,7 +32,7 @@ const Banner = () => {
             </div>
             
             <div className="mt-10 md:mt-0">
-                <Image src={profile} width={320} height={500} alt="Enamul Haque" className="w-64 md:w-80 rounded-full shadow-lg"/>
+                <Image src={profile} width={500} height={500} alt="Enamul Haque" className="md:w-80 rounded-full"/>
             </div>
         </div>
     </div>

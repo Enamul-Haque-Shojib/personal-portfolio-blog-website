@@ -1,6 +1,6 @@
 "use client";
 
-import createProject, { TProject } from "@/actions/createProject";
+import { TProject } from "@/actions/createProject";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -17,15 +17,16 @@ import { useToast } from "@/hooks/use-toast";
 const UpdateProject = () => {
     const { toast } = useToast();
     const router = useRouter();
-    const { update_project } = useParams(); 
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const params : {update_project: string} = useParams(); 
+    // const { update_project } = useParams(); 
+    const [imagePreview, setImagePreview] = useState<string>('');
     const [technologies, setTechnologies] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     const form = useForm({
         defaultValues: {
             projectName: "",
-            projectImgUrl: null,
+            projectImgUrl: "",
             description: "",
             technologies: [],
             email: "",
@@ -37,7 +38,7 @@ const UpdateProject = () => {
     useEffect(() => {
         const fetchProject = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/projects/get-single-project/${update_project}`);
+                const res = await fetch(`https://personal-portfolio-blog-website-server.vercel.app/api/projects/get-single-project/${params?.update_project}`);
                 if (!res.ok) throw new Error("Failed to fetch project");
                 const data = await res.json();
                 const project = data.data[0];
@@ -62,7 +63,7 @@ const UpdateProject = () => {
         };
 
         fetchProject();
-    }, [update_project, form]);
+    }, [params?.update_project, form]);
 
     const handleAddTechnology = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
@@ -80,9 +81,9 @@ const UpdateProject = () => {
     };
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        let projectImgUrl : string | File |null;
+        let projectImgUrl : string;
         projectImgUrl = imagePreview;
-        console.log(projectImgUrl)
+     
 
         if (typeof data.projectImgUrl === 'object') {
             projectImgUrl = await createImage(data.projectImgUrl[0]);
@@ -100,11 +101,10 @@ const UpdateProject = () => {
             live: data.live
         };
 
-        console.log(updatedProject);
+       
 
         try {
-            const response = await updateProject(updatedProject, update_project);
-            console.log(response);
+            await updateProject(updatedProject, params?.update_project);
             router.push('/dashboard/all_projects')
             toast({ title: "Success", description: "Project updated successfully!" });
         } catch (error) {

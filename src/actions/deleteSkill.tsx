@@ -4,7 +4,7 @@
 
 
 const deleteSkill = async(id: string) => {
-    const res = await fetch(`${process.env.BACKEND_URL}/skills/delete-skill/${id}`,
+    const res = await fetch(`https://personal-portfolio-blog-website-server.vercel.app/api/skills/delete-skill/${id}`,
         {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json'},

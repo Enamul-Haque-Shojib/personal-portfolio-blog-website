@@ -8,7 +8,7 @@ import { TSkill } from "./createSkill";
 
 
 const updateSkill = async(data: Partial<TSkill>, id: string) => {
-    const res = await fetch(`http://localhost:5000/api/skills/update-skill/${id}`,
+    const res = await fetch(`https://personal-portfolio-blog-website-server.vercel.app/api/skills/update-skill/${id}`,
         {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json'},

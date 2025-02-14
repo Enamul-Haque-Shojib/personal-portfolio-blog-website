@@ -12,14 +12,17 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useToast } from '@/hooks/use-toast';
+import { useSession } from 'next-auth/react';
 
 const AddBlog = () => {
+    const {data: session} = useSession();
+    const email = session?.user?.email || '';
     const { toast } = useToast();
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const form = useForm({
         defaultValues: {
           title: "",
-          blogImgUrl: null,
+          blogImgUrl: "",
           content: "",
           email: "",
         },
@@ -33,12 +36,12 @@ const AddBlog = () => {
             title: data.title,
             blogImgUrl: blogImgUrl,
             content: data.content,
-            email: 'jack@gmail.com',
+            email: email,
         };
 
         try {
-            const response = await createBlog(initialData);
-            console.log(response);
+            await createBlog(initialData);
+            
             toast({ title: "Success", description: "Blog submitted successfully!" });
         } catch (error) {
             console.error("Error submitting form:", error);

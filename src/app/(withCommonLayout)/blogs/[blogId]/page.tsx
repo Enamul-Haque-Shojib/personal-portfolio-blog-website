@@ -1,60 +1,69 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
- 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
+  
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
+} from "@/components/ui/card";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Image from 'next/image';
-import { TProject } from '@/actions/createProject';
 import Link from 'next/link';
 
-const BlogDetails = async({params}) => {
-    const {blogId} = params;
 
-  
-        const res = await fetch(`http://localhost:5000/api/blogs/get-single-blog/${blogId}`);
 
-        const blogsData = await res.json();
-        console.log(blogsData)
-        const {title, blogImgUrl, content} = blogsData.data[0]
 
-    return (
-        <div>
-           
-           <Card className="w-[700px] flex">
-            <AspectRatio ratio={16 / 9} className="bg-muted border">
-                  <Image
-                    src={blogImgUrl}
-                    alt="Photo by Drew Beamer"
-                    fill
-                    className="h-full w-full rounded-md object-cover"
-                  />
-                </AspectRatio>
-                <div>
-                <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{content}</CardDescription>
-      </CardHeader>
-      <CardContent>
-       
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        
-      </CardFooter>
-                </div>
-      
-    </Card>
-          
-        </div>
-        
-    
-    );
+const fetchBlog = async (blogId: string) => {
+  const res = await fetch(
+    `https://personal-portfolio-blog-website-server.vercel.app/api/blogs/get-single-blog/${blogId}`
+  );
+  if (!res.ok) throw new Error("Failed to fetch blog data");
+  return res.json();
+};
+
+const BlogDetails = async ({ params }: any) => {
+
+  const { blogId } =  params;
+
+  const blogsData = await fetchBlog(blogId);
+  const { title, blogImgUrl, content } = blogsData.data[0];
+
+  return (
+    <div className="container mx-auto py-10 px-4 flex flex-col min-h-screen">
+      <div className="w-[70%] mx-auto flex-grow">
+        <Card className="bg-white shadow-xl rounded-lg overflow-hidden">
+          <AspectRatio ratio={16 / 9} className="bg-muted">
+            <Image
+              src={blogImgUrl}
+              alt={title}
+              fill
+              className="object-cover rounded-t-lg"
+            />
+          </AspectRatio>
+
+          <div className="p-6">
+            <CardHeader>
+              <CardTitle className="text-3xl font-bold text-gray-900">{title}</CardTitle>
+              <CardDescription className="mt-4 text-lg text-gray-700 leading-relaxed">
+                {content}
+              </CardDescription>
+            </CardHeader>
+
+            <CardFooter className="flex justify-between items-center mt-6">
+              <Link href="/blogs">
+                <Button variant="outline" className="px-6 py-2 text-sm font-semibold hover:bg-gray-100">
+                  Back to Blogs
+                </Button>
+              </Link>
+            </CardFooter>
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
 };
 
 export default BlogDetails;

@@ -127,7 +127,7 @@ const AllContactInfo = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/contactinfo`);
+        const res = await fetch(`https://personal-portfolio-blog-website-server.vercel.app/api/contactinfo`);
         if (!res.ok) throw new Error("Failed to fetch contact info");
         const data = await res.json();
         setContactInfosData(data.data);

@@ -3,19 +3,20 @@
 
 
 export type TBlog = {
-    _id: string;
+    _id?: string;
     title: string;
-    blogImgUrl: string | File | null;
+    blogImgUrl: string ;
     content: string;
     email: string;
    
 }
 const createBlog = async(data:TBlog) => {
-    const res = await fetch('http://localhost:5000/api/blogs/create-blog',
+    const res = await fetch('https://personal-portfolio-blog-website-server.vercel.app/api/blogs/create-blog',
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(data),
+            cache: 'no-store'
         }
     );
     const blogData = res.json();

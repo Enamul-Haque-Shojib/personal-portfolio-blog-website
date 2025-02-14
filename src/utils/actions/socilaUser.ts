@@ -4,7 +4,7 @@
 import { TAuth } from "./registerUser";
 
 const SocialUser = async(data:TAuth, email: string) => {
-    const res = await fetch(`${process.env.BACKEND_URL}/auths/account/${email}`,
+    const res = await fetch(`https://personal-portfolio-blog-website-server.vercel.app/api/auths/account/${email}`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},

@@ -14,17 +14,20 @@ import updateBlog from "@/actions/updateBlog";
 import { useToast } from "@/hooks/use-toast";
 
 
+
 const UpdateBlog = () => {
+   
     const router = useRouter();
-    const { update_blog } = useParams(); 
+    const params : {update_blog: string} = useParams();
+    // const { update_blog } = useParams(); 
     const { toast } = useToast();
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [imagePreview, setImagePreview] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(true);
 
     const form = useForm({
         defaultValues: {
             title: "",
-            blogImgUrl: null,
+            blogImgUrl: "",
             content: "",
             email: "",
         },
@@ -33,7 +36,7 @@ const UpdateBlog = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/blogs/get-single-blog/${update_blog}`);
+                const res = await fetch(`https://personal-portfolio-blog-website-server.vercel.app/api/blogs/get-single-blog/${params?.update_blog}`);
                 if (!res.ok) throw new Error("Failed to fetch blog");
                 const data = await res.json();
                 const blog = data.data[0];
@@ -53,10 +56,10 @@ const UpdateBlog = () => {
         };
 
         fetchBlog();
-    }, [update_blog, form]);
+    }, [params?.update_blog, form]);
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        let blogImgUrl: string | File | null = imagePreview;
+        let blogImgUrl: string  = imagePreview;
 
         if (typeof data.blogImgUrl === 'object' && data.blogImgUrl.length > 0) {
             blogImgUrl = await createImage(data.blogImgUrl[0]);
@@ -70,7 +73,7 @@ const UpdateBlog = () => {
         };
 
         try {
-            await updateBlog(updatedBlog, update_blog);
+            await updateBlog(updatedBlog, params?.update_blog);
             toast({
                 title: "Success",
                 description: "Blog updated successfully",

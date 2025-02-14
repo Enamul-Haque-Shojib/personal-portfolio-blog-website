@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"; // Mark this as a Client Component
+"use client"
 
 import { SessionProvider } from "next-auth/react";
 

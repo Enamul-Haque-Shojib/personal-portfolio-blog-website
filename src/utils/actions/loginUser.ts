@@ -1,6 +1,8 @@
 
 "use server"
 
+import { console } from "inspector";
+
 export type TAuth = {
     _id?: string;
     authName?: string;
@@ -11,7 +13,9 @@ export type TAuth = {
    
 }
 const loginUser = async(data:TAuth) => {
-    const res = await fetch(`${process.env.BACKEND_URL}/auths/login`,
+    console.log(data)
+    const res = await fetch(`https://personal-portfolio-blog-website-server.vercel.app/api/auths/login`,
+    // const res = await fetch(`http://localhost:5000/api/auths/login`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
@@ -20,6 +24,7 @@ const loginUser = async(data:TAuth) => {
         },
     );
     const userData = res.json();
+    
     return userData;
 };
 

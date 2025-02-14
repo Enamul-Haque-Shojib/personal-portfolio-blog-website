@@ -13,14 +13,14 @@ const HomePage = () => {
   
  
   return (
-    <div>
-   
+    <div className='flex flex-col min-h-screen'>
+      <main className='flex-grow'>
       <Banner></Banner>
       <AboutMe></AboutMe>
       <Skills></Skills>
       <Feature></Feature>
 
-
+      </main>
     </div>
   );
 };

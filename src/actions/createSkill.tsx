@@ -3,14 +3,14 @@
 
 
 export type TSkill = {
-    _id: string;
+    _id?: string;
     title: string;
-    skillImgUrl: string | File | null;
+    skillImgUrl: string;
     email: string;
    
 }
 const createSkill = async(data:TSkill) => {
-    const res = await fetch('http://localhost:5000/api/skills/create-skill',
+    const res = await fetch('https://personal-portfolio-blog-website-server.vercel.app/api/skills/create-skill',
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},

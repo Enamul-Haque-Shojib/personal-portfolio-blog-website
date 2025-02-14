@@ -4,7 +4,7 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+
 import Image from "next/image";
 
 import React, { useEffect, useState } from "react";
@@ -19,14 +19,15 @@ import { useToast } from "@/hooks/use-toast";
 const UpdateSkill = () => {
     const { toast } = useToast();
     const router = useRouter();
-    const { update_skill } = useParams(); 
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const params : {update_skill: string} = useParams();
+
+    const [imagePreview, setImagePreview] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(true);
 
     const form = useForm({
         defaultValues: {
             title: "",
-            skillImgUrl: null,
+            skillImgUrl: "",
             email: "",
         },
     });
@@ -34,7 +35,7 @@ const UpdateSkill = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/skills/get-single-skill/${update_skill}`);
+                const res = await fetch(`https://personal-portfolio-blog-website-server.vercel.app/api/skills/get-single-skill/${params?.update_skill}`);
                 if (!res.ok) throw new Error("Failed to fetch blog");
                 const data = await res.json();
                 const skill = data.data[0];
@@ -55,15 +56,15 @@ const UpdateSkill = () => {
         };
 
         fetchBlog();
-    }, [update_skill, form]);
+    }, [params?.update_skill, form]);
 
 
     
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        let skillImgUrl : string | File |null;
+        let skillImgUrl : string;
         skillImgUrl = imagePreview;
-        console.log(skillImgUrl)
+   
 
         if (typeof data.skillImgUrl === 'object') {
             skillImgUrl = await createImage(data.skillImgUrl[0]);
@@ -77,11 +78,11 @@ const UpdateSkill = () => {
             email: data.email,
         };
 
-        console.log(updatedSkill);
+       
 
         try {
-            const response = await updateSkill(updatedSkill, update_skill);
-            console.log(response);
+            await updateSkill(updatedSkill, params?.update_skill);
+
             router.push('/dashboard/all_skills')
             toast({ title: "Success", description: "skill updated successfully", variant: "default" });
         } catch (error) {
