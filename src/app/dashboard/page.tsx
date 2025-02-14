@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const DashboardPage = async () => {
   const session = await getServerSession(authOptions);
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">

@@ -29,7 +29,7 @@ const Login = () => {
       password: data.password,
     });
 
- 
+ console.log('-->>>>',result)
     if (result?.error) {
       console.error('Login failed:', result.error);
       toast({ title: "Error", description: "Failed to Logged in." });
