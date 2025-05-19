@@ -97,7 +97,13 @@ const Blogs = async () => {
 
               <CardHeader className="p-4">
                 <CardTitle className="text-lg font-semibold text-gray-800">{blog.title}</CardTitle>
-                <CardDescription className="mt-2 text-sm text-gray-500">{blog.content}</CardDescription>
+                <CardDescription className="mt-2 text-sm text-gray-500">
+                 
+                  <div
+                    className="prose dark:prose-invert mt-4 text-lg leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: blog.content }}
+                  />
+                </CardDescription>
               </CardHeader>
 
               <CardFooter className="flex justify-between items-center p-4">
