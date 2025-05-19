@@ -10,44 +10,51 @@ import Image from 'next/image';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Link from 'next/link';
 
-const projects = [
-  {
-    title: "Language Exchange",
-    description: "Users can register as tutors or students. Tutors can add tutorials and manage bookings, while students can book tutorials as they like.",
-    image: "https://www.shutterstock.com/shutterstock/videos/1111376725/thumb/7.jpg?ip=x480",
-    alt: "Language Exchange platform",
-  },
-  {
-    title: "Sports Equipment Store",
-    description: "Users can add, update, delete, and view their products with a dashboard, as well as manage their profiles.",
-    image: "https://www.niir.org/blog/wp-content/uploads/2023/04/Sport-EQUIP.jpg",
-    alt: "Sports Equipment Store",
-  },
-  {
-    title: "Parcel Warehouse",
-    description: "Users can post parcels with weight, price, location coordinates, and booking status. Admins assign parcels to delivery personnel for tracking and delivery.",
-    image: "https://transimpact.com/wp-content/uploads/2024/02/Blog-Inner-Page-Image.jpg",
-    alt: "Parcel Warehouse Management",
-  },
-];
 
-const Feature = () => {
+
+const fetchProjects = async () => {
+  try {
+    const res = await fetch('http://localhost:5000/api/projects/get-feature-projects', { cache: "force-cache" });
+    if (!res.ok) throw new Error("Failed to fetch projects");
+    return await res.json();
+  } catch (error) {
+    console.error(error);
+    return { data: [] };
+  }
+};
+
+const Feature = async() => {
+
+  type TProject = {
+  _id: string;
+  projectName: string;
+  projectImgUrl: string;
+  description: string;
+  // Add other fields if needed
+};
+  
+  const projects: { data: TProject[] } = await fetchProjects() || { data: [] };
+
+  
+
+
+  
   return (
     <div className='w-full max-w-7xl mx-auto px-4 py-12'>
       <h1 className='text-3xl font-bold text-center mb-8'>Featured Projects</h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-        {projects.map((project, index) => (
-          <Card key={index} className="w-full shadow-lg hover:shadow-xl transition-all">
+        {projects?.data?.map((project:TProject) => (
+          <Card key={project._id} className="w-full shadow-lg hover:shadow-xl transition-all">
             <CardHeader>
               <AspectRatio ratio={16 / 9} className="bg-muted rounded-md overflow-hidden">
                 <Image
-                  src={project.image}
-                  alt={project.alt}
+                  src={project.projectImgUrl}
+                  alt={project.projectName}
                   fill
                   className="object-cover"
                 />
               </AspectRatio>
-              <CardTitle className='mt-4'>{project.title}</CardTitle>
+              <CardTitle className='mt-4'>{project.projectName}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className='text-muted-foreground'>{project.description}</p>
